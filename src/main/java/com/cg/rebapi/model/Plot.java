@@ -15,21 +15,19 @@ import com.sun.istack.NotNull;
 public class Plot {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column( name = "id")
+
 	private Long plotId;
 	@NotNull
-	@Column(name = "plotname" ,length = 20)
+
 	@Size(min=3, message = "plot name should have minimum 3 characters")
 	private String plotName;
 	@NotNull
-	@Column(name = "squareFeet")
+	
 	private String squareFeet;
 	@NotNull
-	@Column(name = "price")
 	private Integer price;
 	@NotNull
-    @Column(name = "availability")
-	private Boolean availability;
+   	private Boolean availability;
     
 	public Plot() {
 		super();

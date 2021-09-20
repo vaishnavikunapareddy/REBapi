@@ -19,34 +19,33 @@ import com.sun.istack.NotNull;
 public class Address {
 
 	@Id
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(name="street_no",length=20)
+	
 	@NotNull
 	@Size(min = 3, message = "street number should have atleast 3 character")
 	private String streetNo;
 	
-	@Column(name="street_name",length =20)
 	@NotNull
 	@Size(min = 3, message = "street name should have atleast 3 character")
 	private String streetName;
 	
-	@Column(name="city",length=20)
+
 	@NotNull
 	@Size(min = 3, message = "city name should have atleast 3 character")
 	private String city;
 	
-	@Column(name="state",length =20)
+	
 	@NotNull
 	@Size(min = 3, message = "state name should have atleast 3 character")
 	private String state;
 	
-	@Column(name="country",length =20)
+	
 	@NotNull
 	@Size(min = 3, message = "country name should have atleast 3 character")
 	private String country;
 	
-	@Column(name="pincode",length =7)
+	
 	@NotNull
 	@Size(min = 6, message = "pin code should have atleast 6 character")
 	private String pincode;

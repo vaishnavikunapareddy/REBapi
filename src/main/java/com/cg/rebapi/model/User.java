@@ -8,10 +8,9 @@ import javax.persistence.Table;
 @Table(name = "user_tbl")
 public class User {
 	@Id
-	@Column(name="uname",length=20)
 	private String userName ;
 	
-	@Column(name="pwd",length=20)
+	
 	private String password;
 
 	public User() {

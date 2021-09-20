@@ -6,29 +6,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "shop")
 public class Shop {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column( name = "id")
-	private Integer shopId;
-	@Column(name = "shopname" ,length = 20)
+	private Long shopId;
+	@NotNull
 	private String shopName;
-	@Column(name = "noofRooms")
+	@NotNull
 	private Integer noOfRooms;
-	@Column(name = "squareFeet")
+	@NotNull
 	private Integer squareFeet;
-	@Column(name = "price")
+	@NotNull
 	private Integer price;
-    @Column(name = "availability")
+	@NotNull
 	private String availability;
 	public Shop() {
 		super();
 	}
-	public Shop(Integer shopId, String shopName, Integer noOfRooms, Integer squareFeet, Integer price,
-			String availability) {
+	
+	public Shop(Long shopId, @NotNull String shopName, @NotNull Integer noOfRooms, @NotNull Integer squareFeet,
+			@NotNull Integer price, @NotNull String availability) {
 		super();
 		this.shopId = shopId;
 		this.shopName = shopName;
@@ -37,12 +38,16 @@ public class Shop {
 		this.price = price;
 		this.availability = availability;
 	}
-	public Integer getShopId() {
+
+	
+	public Long getShopId() {
 		return shopId;
 	}
-	public void setShopId(Integer shopId) {
+
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
+
 	public String getShopName() {
 		return shopName;
 	}

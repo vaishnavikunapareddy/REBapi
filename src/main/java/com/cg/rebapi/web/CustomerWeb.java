@@ -40,15 +40,7 @@ public class CustomerWeb {
 		return null;
 	}
 	
-	@PutMapping("/updatecustomer")
-	public Customer updateBroker(@RequestBody Customer customer) {
-		if(customerService.checkCustomer(customer.getCustomerId())) {
-			return customerService.updateCustomer(customer);
-		}
-		return null;
-		
-	}
-
+	
 	
 
 }

@@ -2,6 +2,8 @@ package com.cg.rebapi.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -15,23 +17,22 @@ import com.sun.istack.NotNull;
 	public class Owner {
 	
 	@Id
-	@Column (name="Id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
 	private Long id;
-	@Column (name="fName",length=20)
 	@NotNull
 	@Size(min = 3, message = "owner first name should have atleast 3 character")
 
 	private String firstName;
-	@Column (name="lName",length=20)
+	
 	@NotNull
 	@Size(min = 3, message = "owner last name should have atleast 3 character")
 
 	private String lastName;
-	@Column (name="Mob_no")
+
 	@NotNull	
 	private Long contact;
-	@Column (name="email")
+
 	@NotNull	
 	private String email;
 	public Owner() {

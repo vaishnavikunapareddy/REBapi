@@ -6,9 +6,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.cg.rebapi.model.Broker;
 
-public interface BrokerRepository extends JpaRepository<Broker, Integer>{
+public interface BrokerRepository extends JpaRepository<Broker, Long>{
 	
-	@Query("select b from Broker b where b.id=:id")
-	public boolean exsistsById(@Param("id") long p1);
+	
 
 }

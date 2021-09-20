@@ -15,34 +15,26 @@ import javax.persistence.Table;
 @Table(name="broker")
 public class Broker {
 	@Id
-	@Column(name="id")
+
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(name="fname",length=20)
 	@NotNull
 	@Size(min=2, message="first name should contain minimum 2 characters")
 	private String brokerFirstName;
 	@NotNull
 	@Size(min=2, message="last name should contain minimum 2 characters")
-	@Column(name="lname",length=20)
+	
 	private String brokerLastName;
 	@NotNull
-	@Column(name="phone")
+	
 	private Long contact;
 	@NotNull
 	@Email
-	@Column(name="email",length=20)
 	private String email;
 	
 	public Broker() {
 		super();
 	}
-	
-		
-
-	
-
-
 	public Long getId() {
 		return id;
 	}

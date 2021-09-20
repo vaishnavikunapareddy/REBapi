@@ -3,6 +3,8 @@ package com.cg.rebapi.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.rebapi.exception.AddressException;
+import com.cg.rebapi.exception.BrokerException;
 import com.cg.rebapi.model.Address;
 import com.cg.rebapi.model.Broker;
 import com.cg.rebapi.repository.AddressRepository;
@@ -22,38 +26,27 @@ import com.cg.rebapi.serviceimpl.AddressServiceImpl;
 public class AddressWeb {
 	@Autowired
 	public AddressServiceImpl addressService;
-	@Autowired
-	public AddressRepository addressRepository;
+	@GetMapping("/getaddresses")
+	public ResponseEntity<?> getBrokers(){
+		List<Address> brokerList= addressService.getAddresses();
+		return new ResponseEntity<>(brokerList,HttpStatus.OK);
+	}
 	
 	@PostMapping("/addaddress")
-	public Address addEmployee(@RequestBody Address address) {
-		Address a= addressService.addAddress(address);
-		return a;
+	public ResponseEntity<Address> addAddress(@RequestBody Address address) {
+		Address addressSaved=addressService.addAddress(address);
+		return new ResponseEntity<Address>(addressSaved, HttpStatus.CREATED);
 	}
-	
+	@GetMapping("/getaddress/{id}")
+	public ResponseEntity<?> getAddress(@PathVariable("id") long id){
+		List<Address> addressList= addressService.getAddresses();
+		return new ResponseEntity<>(addressList,HttpStatus.OK);
+		
+	}
 	@DeleteMapping("/deleteaddress/{id}")
-	public Address deleteBroker(@PathVariable("id") int streetNo) {
-		if(addressService.checkAddress(streetNo)) {
-			return addressService.deleteAddress(streetNo);
-		}
-		return null;
-	}
-
-	
-	@PutMapping("/updateaddress")
-	public Address updateBroker(@RequestBody Address address) {
-		
-		if(addressService.checkAddress(address.getStreetNo())) {
-			return addressService.updateAddress(address);
-		}
-		return null;
-		
-	}
-	
-	@GetMapping("/addresses")
-	public List<Address> getListOfAddress(){
-		
-		return addressRepository.findAll();
+	public ResponseEntity<?> deleteaddress(@PathVariable("id") long id) throws AddressException{
+		Address addressSaved=addressService.deleteAddress(id);
+		return new ResponseEntity<>(addressSaved,HttpStatus.OK);
 	}
 		
 	

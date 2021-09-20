@@ -26,28 +26,26 @@ public class BrokerWeb {
 	public BrokerServiceImpl brokerService;
 	
 	@GetMapping("/getbrokers")
-	public ResponseEntity<Object> getBrokers(){
+	public ResponseEntity<?> getBrokers(){
 		List<Broker> brokerList= brokerService.listOfBrokers();
-		return new ResponseEntity<>(brokerList, HttpStatus.OK);
+		return new ResponseEntity<>(brokerList,HttpStatus.OK);
 	}
 	
 	@PostMapping("/addbroker")
-	public @ResponseBody String addEmployee(@RequestBody Broker broker) {
-		if(brokerService.checkBroker(broker.getId())) {
-			brokerService.addBroker(broker);
-		return "Broker with "+broker.getId()+" got updated";
-		}
-		brokerService.addBroker(broker);
-		return "broker got added successfully";
+	public ResponseEntity<Broker> addBroker(@RequestBody Broker broker) {
+		Broker brokerSaved=brokerService.addBroker(broker);
+		return new ResponseEntity<Broker>(brokerSaved, HttpStatus.CREATED);
 	}
-	
+	@GetMapping("/brokerlist/{id}")
+	public ResponseEntity<?> getBroker(@PathVariable("id") long id){
+		List<Broker> brokerList= brokerService.listOfBrokers();
+		return new ResponseEntity<>(brokerList,HttpStatus.OK);
+		
+	}
 	@DeleteMapping("/deletebroker/{id}")
-	public @ResponseBody String deleteBroker(@PathVariable("id") int bno) throws BrokerException{
-		if(brokerService.checkBroker(bno)) {
-			brokerService.deleteBroker(bno);
-			return "Broker got deleted ";
-		}
-		throw new BrokerException("broker with id "+bno+" was not present to delete");
+	public ResponseEntity<?> deleteBroker(@PathVariable("id") long bno) throws BrokerException{
+		Broker brokerSaved=brokerService.deleteBroker(bno);
+		return new ResponseEntity<>(brokerSaved,HttpStatus.OK);
 	}
 	
 	
