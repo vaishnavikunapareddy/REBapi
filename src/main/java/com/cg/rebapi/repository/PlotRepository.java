@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cg.rebapi.model.Plot;
 
-public interface PlotRepository extends JpaRepository<Plot, Integer>{
+public interface PlotRepository extends JpaRepository<Plot, Long>{
 
 }

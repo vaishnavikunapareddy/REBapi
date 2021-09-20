@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.rebapi.exception.CustomerException;
+import com.cg.rebapi.exception.EmptyFieldException;
+import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.repository.CustomerRepository;
 import com.cg.rebapi.service.CustomerService;
@@ -15,37 +18,53 @@ import com.cg.rebapi.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
 	
 	
-		@Autowired
-		CustomerRepository customerRepository;
-		@Override
-		public List<Customer> listOfCustomer(){
-			List<Customer> customers=customerRepository.findAll();
-			return customers;
-			
-		}
-		@Override
-		public Customer addCustomer(Customer customer) {
-			Customer c=  customerRepository.save(customer);
-			return c;
-		}
-		@Override
-		public Customer updateCustomer(Customer customer) {
-			return  customerRepository.save(customer);
-		}
-		@Override
-		public Customer deleteCustomer(int id) {
-			Customer c= customerRepository.findById(id).get();
-			customerRepository.deleteById(id);
-			return c;
-		}
+	@Autowired
+	CustomerRepository customerRepository;
+	@Override
+	public List<Customer> listOfCustomers(){
+		List<Customer> customers=customerRepository.findAll();
+		if(customers.isEmpty())
+			throw new EmptyListException();
+		return customers;
 		
-		public boolean checkCustomer(int id) {
-			if(customerRepository.existsById(id))
-				return true;
-			return false;
-			
-		}
+	}
+	@Override
+	public Customer addCustomer(Customer customer) {
+		if(customer.getCustomerFirstName().isEmpty()||customer.getCustomerFirstName().length()==0)
+			throw new EmptyFieldException("601", "Input feilds are empty");
+		Customer c= customerRepository.save(customer);
+		return c;
+	}
+	
 
+	@Override
+	public Customer deleteCustomer(long id) throws CustomerException  {
+		if(customerRepository.existsById(id)) {
+			Customer c=customerRepository.findById(id).get();
+			customerRepository.deleteById(id);
+		return c;
+		}
+		throw new CustomerException("Customer with id "+id + " is not there to delete");
+	}
+	@Override
+	public boolean checkCustomer(long id) {
+		if(customerRepository.existsById(id))
+			return true;
+		return false;
+		
+	}
+
+	@Override
+	public Customer getCustomer(long id) throws CustomerException{
+		// TODO Auto-generated method stub
+		if(customerRepository.existsById(id)) {
+			Customer c=customerRepository.findById(id).get();
+			return c;
+		}
+		throw new CustomerException("Customer with id "+id+" is not there to update");
+	}
+
+	
 		
 		
 }

@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService{
 	UserRepository userRepository;
 	@Override
 	public boolean validate(User user) {
-		   if(userRepository.existsById(user.getUserName())){
-			  User u = userRepository.findById(user.getUserName()).get();
+		   if(userRepository.existsById(user.getId())){
+			  User u = userRepository.findById(user.getId()).get();
 			   if(user.getPassword().equals(u.getPassword())) {
 				   return true;
 			   }
