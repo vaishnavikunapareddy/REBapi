@@ -1,5 +1,7 @@
 package com.cg.rebapi.model;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,45 +9,81 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name="broker")
 public class Broker {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer brokerId;
-	@Column(name="bname")
-	private String brokerName;
+	private Long id;
+	@Column(name="fname",length=20)
+	@NotNull
+	@Size(min=2, message="first name should contain minimum 2 characters")
+	private String brokerFirstName;
+	@NotNull
+	@Size(min=2, message="last name should contain minimum 2 characters")
+	@Column(name="lname",length=20)
+	private String brokerLastName;
+	@NotNull
 	@Column(name="phone")
 	private Long contact;
-	@Column(name="email")
+	@NotNull
+	@Email
+	@Column(name="email",length=20)
 	private String email;
-	@Column(name="city")
-	private String city;
+	
 	public Broker() {
 		super();
 	}
-	public Broker(Integer brokerId, String brokerName, Long contact, String email, String city) {
+	
+		
+
+	
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public Broker(Long id, String brokerFirstName, String brokerLastName, Long contact, String email) {
 		super();
-		this.brokerId = brokerId;
-		this.brokerName = brokerName;
+		this.id = id;
+		this.brokerFirstName = brokerFirstName;
+		this.brokerLastName = brokerLastName;
 		this.contact = contact;
 		this.email = email;
-		this.city = city;
 	}
-	public Integer getBrokerId() {
-		return brokerId;
+
+
+
+	public String getBrokerFirstName() {
+		return brokerFirstName;
 	}
-	public void setBrokerId(Integer brokerId) {
-		this.brokerId = brokerId;
+
+	public void setBrokerFirstName(String brokerFirstName) {
+		this.brokerFirstName = brokerFirstName;
 	}
-	public String getBrokerName() {
-		return brokerName;
+
+	public String getBrokerLastName() {
+		return brokerLastName;
 	}
-	public void setBrokerName(String brokerName) {
-		this.brokerName = brokerName;
+
+	public void setBrokerLastName(String brokerLastName) {
+		this.brokerLastName = brokerLastName;
 	}
-	public Long getContact() {
+
+	
+		public Long getContact() {
 		return contact;
 	}
 	public void setContact(Long contact) {
@@ -57,17 +95,15 @@ public class Broker {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
 	@Override
 	public String toString() {
-		return "Broker [brokerId=" + brokerId + ", brokerName=" + brokerName + ", contact=" + contact + ", email="
-				+ email + ", city=" + city + "]";
+		return "Broker [id=" + id + ", brokerFirstName=" + brokerFirstName + ", brokerLastName=" + brokerLastName
+				+ ", contact=" + contact + ", email=" + email + "]";
 	}
+
+
+	
+	
 	
 	
 
