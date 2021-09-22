@@ -1,20 +1,26 @@
 package com.cg.rebapi.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "plot_tbl")
+@Table(name = "plot")
 public class Plot {
 	@Id 
+	
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 
 	private Long plotId;
 	@NotNull
@@ -27,20 +33,27 @@ public class Plot {
 	@NotNull
 	private Integer price;
 	@NotNull
-   	private Boolean availability;
-    
+   	private String status;
+	
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address plotAddress;
 	public Plot() {
 		super();
 	}
 
+	
+
+	
+
 	public Plot(Long plotId, @Size(min = 3, message = "plot name should have minimum 3 characters") String plotName,
-			String squareFeet, Integer price, Boolean availability) {
+			String squareFeet, Integer price, String status) {
 		super();
 		this.plotId = plotId;
 		this.plotName = plotName;
 		this.squareFeet = squareFeet;
 		this.price = price;
-		this.availability = availability;
+		this.status = status;
 	}
 
 	public Long getPlotId() {
@@ -74,19 +87,43 @@ public class Plot {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
+	
+	
 
-	public Boolean getAvailability() {
-		return availability;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setAvailability(Boolean availability) {
-		this.availability = availability;
+	public void setStatus(String status) {
+		this.status = status;
 	}
+	
+
+
+
+
+
+
+	public Address getPlotAddress() {
+		return plotAddress;
+	}
+
+
+
+
+
+	public void setPlotAddress(Address plotAddress) {
+		this.plotAddress = plotAddress;
+	}
+
+
+
+
 
 	@Override
 	public String toString() {
 		return "Plot [plotId=" + plotId + ", plotName=" + plotName + ", squareFeet=" + squareFeet + ", price=" + price
-				+ ", availability=" + availability + "]";
+				+ ", status=" + status + "]";
 	}
 	
 	

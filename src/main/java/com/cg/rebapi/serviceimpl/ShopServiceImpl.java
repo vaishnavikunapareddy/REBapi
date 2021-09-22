@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cg.rebapi.exception.EmptyFieldException;
 import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.exception.ShopException;
+import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
 import com.cg.rebapi.repository.ShopRepository;
 import com.cg.rebapi.service.ShopService;
@@ -27,7 +28,7 @@ public class ShopServiceImpl implements ShopService{
 	}
 	@Override
 	public Shop addShop(Shop shop) {
-		if(shop.getShopName().isEmpty()||shop.getNoOfRooms()==0)
+		if(shop.getShopName().isEmpty())
 			throw new EmptyFieldException("601", "Input feilds are empty");
 		Shop s= shopRepository.save(shop);
 		return s;
@@ -60,6 +61,13 @@ public class ShopServiceImpl implements ShopService{
 		}
 		throw new ShopException("Shop with id "+id+" is not there to get");
 	}
-
+	
+	@Override
+	public List<Shop> getShopStatus(String status){
+		List<Shop> shopList=shopRepository.getShopStatus(status);
+		if(shopList.isEmpty())
+			throw new EmptyListException();
+		return shopList;
+	}
 
 }

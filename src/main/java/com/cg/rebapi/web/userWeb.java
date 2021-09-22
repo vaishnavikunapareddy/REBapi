@@ -27,7 +27,7 @@ public class userWeb {
 		return "Login Failed";
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("/getusers")
 	public List<User> getUsers() {
 		return userService.getAllUsers();
 	}

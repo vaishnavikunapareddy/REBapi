@@ -3,6 +3,7 @@ package com.cg.rebapi.service;
 import java.util.List;
 
 import com.cg.rebapi.exception.ShopException;
+import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
 
 
@@ -17,6 +18,8 @@ public interface ShopService {
 	public boolean checkShop(long id);
 
 	public Shop getShop(long id) throws ShopException;
+
+	public List<Shop> getShopStatus(String status);
 	
 
 }

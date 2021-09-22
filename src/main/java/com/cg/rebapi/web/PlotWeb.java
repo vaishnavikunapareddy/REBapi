@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.rebapi.exception.PlotException;
+import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.serviceimpl.PlotServiceImpl;
 
@@ -36,15 +37,21 @@ public class PlotWeb {
 		return new ResponseEntity<Plot>(plotSaved, HttpStatus.CREATED);
 	}
 	@GetMapping("/getplot/{id}")
-	public ResponseEntity<?> getPlot(@PathVariable("id") long id){
-		List<Plot> plotList= plotService.listOfPlots();
-		return new ResponseEntity<>(plotList,HttpStatus.OK);
+	public ResponseEntity<?> getPlot(@PathVariable("id") long id) throws PlotException{
+		Plot p= plotService.getPlot(id);
+		return new ResponseEntity<>(p,HttpStatus.OK);
 		
 	}
 	@DeleteMapping("/deleteplot/{id}")
 	public ResponseEntity<?> deletePlot(@PathVariable("id") long bno) throws PlotException{
 		Plot plotSaved=plotService.deletePlot(bno);
 		return new ResponseEntity<>(plotSaved,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getplotstatus/{status}")
+	public ResponseEntity<?> getFlatStatus(@PathVariable("status") String status){
+		List<Plot> plotList= plotService.getPlotStatus(status);
+		return new ResponseEntity<>(plotList,HttpStatus.OK);
 	}
 	
 	

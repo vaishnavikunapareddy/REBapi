@@ -1,10 +1,14 @@
 package com.cg.rebapi.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.persistence.Column;
@@ -12,14 +16,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="address_tbl")
+@Table(name="address")
 public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="aid")
 	private Long id;
 	
 	@NotNull
@@ -49,7 +55,33 @@ public class Address {
 	@NotNull
 	@Size(min = 6, message = "pin code should have atleast 6 character")
 	private String pincode;
+	
 
+	
+	@OneToOne(mappedBy = "flatAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Flat flat;
+	
+	@OneToOne(mappedBy = "plotAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Plot plot;
+
+	@OneToOne(mappedBy = "shopAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Shop shop;
+
+	@OneToOne(mappedBy = "brokerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Broker broker;
+	
+	@OneToOne(mappedBy = "customerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Customer customer;
+	
+	@OneToOne(mappedBy = "ownerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Owner owner;
+	
 	public Address() {
 		super();
 	}
@@ -129,6 +161,67 @@ public class Address {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+	
+
+	public Flat getFlat() {
+		return flat;
+	}
+
+
+	public void setFlat(Flat flat) {
+		this.flat = flat;
+	}
+	
+
+
+	public Plot getPlot() {
+		return plot;
+	}
+
+
+	public void setPlot(Plot plot) {
+		this.plot = plot;
+	}
+
+
+	public Shop getShop() {
+		return shop;
+	}
+
+
+	public void setShop(Shop shop) {
+		this.shop = shop;
+	}
+
+
+	public Broker getBroker() {
+		return broker;
+	}
+
+
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 

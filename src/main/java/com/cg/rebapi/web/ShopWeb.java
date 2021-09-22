@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.rebapi.exception.ShopException;
+import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
 import com.cg.rebapi.serviceimpl.ShopServiceImpl;
 
@@ -25,7 +26,7 @@ public class ShopWeb {
 	@Autowired
 	public ShopServiceImpl shopService;
 	
-	@GetMapping("/getshop")
+	@GetMapping("/getshops")
 	public ResponseEntity<?> getShops(){
 		List<Shop> shopList= shopService.listOfShops();
 		return new ResponseEntity<>(shopList,HttpStatus.OK);
@@ -36,7 +37,7 @@ public class ShopWeb {
 		Shop shopSaved=shopService.addShop(shop);
 		return new ResponseEntity<Shop>(shopSaved, HttpStatus.CREATED);
 	}
-	@GetMapping("/shoplist/{id}")
+	@GetMapping("/getshop/{id}")
 	public ResponseEntity<?> getShop(@PathVariable("id") long id){
 		List<Shop> shopList= shopService.listOfShops();
 		return new ResponseEntity<>(shopList,HttpStatus.OK);
@@ -46,6 +47,12 @@ public class ShopWeb {
 	public ResponseEntity<?> deleteshop(@PathVariable("id") long bno) throws ShopException{
 		Shop shopSaved=shopService.deleteShop(bno);
 		return new ResponseEntity<>(shopSaved,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getshopstatus/{status}")
+	public ResponseEntity<?> getFlatStatus(@PathVariable("status") String status){
+		List<Shop> shopList= shopService.getShopStatus(status);
+		return new ResponseEntity<>(shopList,HttpStatus.OK);
 	}
 	
 	

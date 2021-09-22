@@ -9,5 +9,9 @@ public interface UserService {
 	public List<User> getAllUsers();
 
 	public boolean validate(User user);
+	
+//	public User signIn(User user);
+//	
+//	public User signOut();
 
 }

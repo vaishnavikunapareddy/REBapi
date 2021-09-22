@@ -17,5 +17,9 @@ public interface FlatService {
 	public boolean checkFlat(long id);
 
 	public Flat getFlat(long id) throws FlatException;
+	
+	
+
+	public List<Flat> getFlatStatus(String status);
 
 }

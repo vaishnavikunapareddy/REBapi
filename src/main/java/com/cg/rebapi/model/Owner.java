@@ -1,17 +1,21 @@
 package com.cg.rebapi.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="owner_tbl")
+@Table(name="owner")
 
 
 	public class Owner {
@@ -35,6 +39,10 @@ import com.sun.istack.NotNull;
 
 	@NotNull	
 	private String email;
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address ownerAddress;
+
 	public Owner() {
 		super();
 	}
@@ -75,6 +83,15 @@ import com.sun.istack.NotNull;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	
+	
+	public Address getOwnerAddress() {
+		return ownerAddress;
+	}
+	public void setOwnerAddress(Address ownerAddress) {
+		this.ownerAddress = ownerAddress;
 	}
 	@Override
 	public String toString() {

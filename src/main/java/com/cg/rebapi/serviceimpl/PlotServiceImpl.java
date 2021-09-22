@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cg.rebapi.exception.EmptyFieldException;
 import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.exception.PlotException;
+import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.repository.PlotRepository;
 import com.cg.rebapi.service.PlotService;
@@ -54,12 +55,21 @@ public class PlotServiceImpl implements PlotService{
 
 	@Override
 	public Plot getPlot(long id) throws PlotException{
-		// TODO Auto-generated method stub
+		
 		if(plotRepository.existsById(id)) {
 			Plot p=plotRepository.findById(id).get();
 			return p;
 		}
-		throw new PlotException("Plot with id "+id+" is not there to update");
+		throw new PlotException("Plot with id "+id+" is not there to get");
+	}
+	
+	@Override
+	public List<Plot> getPlotStatus(String status){
+		List<Plot> plotList=plotRepository.getPlotStatus(status);
+		if(plotList.isEmpty())
+			throw new EmptyListException();
+		return plotList;
+		
 	}
 	
 

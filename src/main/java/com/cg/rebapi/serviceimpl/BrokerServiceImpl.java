@@ -27,7 +27,7 @@ public class BrokerServiceImpl implements BrokerService{
 	}
 	@Override
 	public Broker addBroker(Broker broker) {
-		if(broker.getBrokerFirstName().isEmpty()||broker.getBrokerFirstName().length()==0)
+		if(broker.getBrokerFirstName().isEmpty()||broker.getBrokerLastName().length()==0)
 			throw new EmptyFieldException("601", "Input feilds are empty");
 		Broker b= brokerRepository.save(broker);
 		return b;

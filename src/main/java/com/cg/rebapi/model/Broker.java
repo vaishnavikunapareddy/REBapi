@@ -2,11 +2,21 @@ package com.cg.rebapi.model;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -32,8 +42,23 @@ public class Broker {
 	@Email
 	private String email;
 	
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address brokerAddress;
+
+	
+	
+	
 	public Broker() {
 		super();
+	}
+	public Broker(Long id, String brokerFirstName, String brokerLastName, Long contact, String email) {
+		super();
+		this.id = id;
+		this.brokerFirstName = brokerFirstName;
+		this.brokerLastName = brokerLastName;
+		this.contact = contact;
+		this.email = email;
 	}
 	public Long getId() {
 		return id;
@@ -45,27 +70,14 @@ public class Broker {
 		this.id = id;
 	}
 
-
-
-	public Broker(Long id, String brokerFirstName, String brokerLastName, Long contact, String email) {
-		super();
-		this.id = id;
+	public void setBrokerFirstName(String brokerFirstName) {
 		this.brokerFirstName = brokerFirstName;
-		this.brokerLastName = brokerLastName;
-		this.contact = contact;
-		this.email = email;
 	}
-
-
+	
 
 	public String getBrokerFirstName() {
 		return brokerFirstName;
 	}
-
-	public void setBrokerFirstName(String brokerFirstName) {
-		this.brokerFirstName = brokerFirstName;
-	}
-
 	public String getBrokerLastName() {
 		return brokerLastName;
 	}
@@ -86,6 +98,13 @@ public class Broker {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public Address getBrokerAddress() {
+		return brokerAddress;
+	}
+	public void setBrokerAddress(Address brokerAddress) {
+		this.brokerAddress = brokerAddress;
 	}
 	@Override
 	public String toString() {

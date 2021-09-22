@@ -1,10 +1,14 @@
 package com.cg.rebapi.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,20 +27,28 @@ public class Shop {
 	@NotNull
 	private Integer price;
 	@NotNull
-	private String availability;
+	private String status;
 	public Shop() {
 		super();
 	}
 	
+//	@OneToOne(cascade = CascadeType.MERGE)
+//	@JoinColumn(name="aid")
+//	Address address;
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address shopAddress;
+	
+	
 	public Shop(Long shopId, @NotNull String shopName, @NotNull Integer noOfRooms, @NotNull Integer squareFeet,
-			@NotNull Integer price, @NotNull String availability) {
+			@NotNull Integer price, @NotNull String status) {
 		super();
 		this.shopId = shopId;
 		this.shopName = shopName;
 		this.noOfRooms = noOfRooms;
 		this.squareFeet = squareFeet;
 		this.price = price;
-		this.availability = availability;
+		this.status = status;
 	}
 
 	
@@ -72,16 +84,27 @@ public class Shop {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	public String getAvailability() {
-		return availability;
+	public String getStatus() {
+		return status;
 	}
-	public void setAvailability(String availability) {
-		this.availability = availability;
+	public void setStatus(String availability) {
+		this.status = availability;
 	}
+	
+	public Address getShopAddress() {
+		return shopAddress;
+	}
+
+
+	public void setShopAddress(Address shopAddress) {
+		this.shopAddress = shopAddress;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Shop [shopId=" + shopId + ", shopName=" + shopName + ", noOfRooms=" + noOfRooms + ", squareFeet="
-				+ squareFeet + ", price=" + price + ", availability=" + availability + "]";
+				+ squareFeet + ", price=" + price + ", status=" + status + "]";
 	}
     
 }

@@ -36,7 +36,7 @@ public class BrokerWeb {
 		Broker brokerSaved=brokerService.addBroker(broker);
 		return new ResponseEntity<Broker>(brokerSaved, HttpStatus.CREATED);
 	}
-	@GetMapping("/brokerlist/{id}")
+	@GetMapping("/getbroker/{id}")
 	public ResponseEntity<?> getBroker(@PathVariable("id") long id){
 		List<Broker> brokerList= brokerService.listOfBrokers();
 		return new ResponseEntity<>(brokerList,HttpStatus.OK);
