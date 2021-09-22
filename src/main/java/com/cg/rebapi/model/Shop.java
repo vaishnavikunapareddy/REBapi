@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "shop")
 public class Shop {
 	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long shopId;
 	@NotNull
 	private String shopName;

@@ -53,7 +53,7 @@ public class BrokerServiceImpl implements BrokerService{
 
 	@Override
 	public Broker getBroker(long id) throws BrokerException{
-		// TODO Auto-generated method stub
+		
 		if(brokerRepository.existsById(id)) {
 			Broker b=brokerRepository.findById(id).get();
 			return b;

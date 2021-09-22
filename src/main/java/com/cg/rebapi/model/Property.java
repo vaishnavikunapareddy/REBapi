@@ -10,8 +10,10 @@ import javax.persistence.Id;
 public class Property {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
+	
 	
 
 }

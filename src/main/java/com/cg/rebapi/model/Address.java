@@ -22,9 +22,8 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name="address")
 public class Address {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="aid")
 	private Long id;
 	
@@ -54,7 +53,7 @@ public class Address {
 	
 	@NotNull
 	@Size(min = 6, message = "pin code should have atleast 6 character")
-	private String pincode;
+	private Integer pincode;
 	
 
 	
@@ -87,12 +86,22 @@ public class Address {
 	}
 
 	
+	
+
+
+	
+
+
+
+
+
 	public Address(Long id, @Size(min = 3, message = "street number should have atleast 3 character") String streetNo,
 			@Size(min = 3, message = "street name should have atleast 3 character") String streetName,
 			@Size(min = 3, message = "city name should have atleast 3 character") String city,
 			@Size(min = 3, message = "state name should have atleast 3 character") String state,
 			@Size(min = 3, message = "country name should have atleast 3 character") String country,
-			@Size(min = 6, message = "pin code should have atleast 6 character") String pincode) {
+			@Size(min = 6, message = "pin code should have atleast 6 character") Integer pincode, Flat flat, Plot plot,
+			Shop shop, Broker broker, Customer customer, Owner owner) {
 		super();
 		this.id = id;
 		this.streetNo = streetNo;
@@ -101,7 +110,22 @@ public class Address {
 		this.state = state;
 		this.country = country;
 		this.pincode = pincode;
+		this.flat = flat;
+		this.plot = plot;
+		this.shop = shop;
+		this.broker = broker;
+		this.customer = customer;
+		this.owner = owner;
 	}
+
+
+
+
+
+
+
+
+
 
 
 	public String getStreetNo() {
@@ -155,14 +179,13 @@ public class Address {
 		this.country = country;
 	}
 
-	public String getPincode() {
+	public Integer getPincode() {
 		return pincode;
 	}
-
-	public void setPincode(String pincode) {
+	
+	public void setPincode(Integer pincode) {
 		this.pincode = pincode;
 	}
-	
 
 	public Flat getFlat() {
 		return flat;

@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,7 +27,7 @@ import javax.persistence.Table;
 public class Broker {
 	@Id
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotNull
 	@Size(min=2, message="first name should contain minimum 2 characters")
@@ -41,14 +42,18 @@ public class Broker {
 	@NotNull
 	@Email
 	private String email;
-	
+	//mapping with address
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address brokerAddress;
+	
+	//mapping with customer
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name="broker_id", referencedColumnName = "id")
+	List<Customer> customerList= new ArrayList<Customer>();
+	
 
-	
-	
-	
 	public Broker() {
 		super();
 	}
@@ -106,6 +111,14 @@ public class Broker {
 	public void setBrokerAddress(Address brokerAddress) {
 		this.brokerAddress = brokerAddress;
 	}
+	public List<Customer> getCustomerList() {
+		return customerList;
+	}
+	public void setCustomerList(List<Customer> customerList) {
+		this.customerList = customerList;
+	}
+	
+//	
 	@Override
 	public String toString() {
 		return "Broker [id=" + id + ", brokerFirstName=" + brokerFirstName + ", brokerLastName=" + brokerLastName

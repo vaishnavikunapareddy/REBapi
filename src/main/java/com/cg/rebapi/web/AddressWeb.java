@@ -22,28 +22,28 @@ import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.serviceimpl.AddressServiceImpl;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("api/addresses")
 public class AddressWeb {
 	@Autowired
 	public AddressServiceImpl addressService;
-	@GetMapping("/getaddresses")
+	@GetMapping("")
 	public ResponseEntity<?> getBrokers(){
 		List<Address> brokerList= addressService.getAddresses();
 		return new ResponseEntity<>(brokerList,HttpStatus.OK);
 	}
 	
-	@PostMapping("/addaddress")
+	@PostMapping("")
 	public ResponseEntity<Address> addAddress(@RequestBody Address address) {
 		Address addressSaved=addressService.addAddress(address);
 		return new ResponseEntity<Address>(addressSaved, HttpStatus.CREATED);
 	}
-	@GetMapping("/getaddress/{id}")
-	public ResponseEntity<?> getAddress(@PathVariable("id") long id){
-		List<Address> addressList= addressService.getAddresses();
-		return new ResponseEntity<>(addressList,HttpStatus.OK);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getAddress(@PathVariable("id") long id) throws AddressException{
+		Address address = addressService.getAddress(id);
+		return new ResponseEntity<>(address,HttpStatus.OK);
 		
 	}
-	@DeleteMapping("/deleteaddress/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteaddress(@PathVariable("id") long id) throws AddressException{
 		Address addressSaved=addressService.deleteAddress(id);
 		return new ResponseEntity<>(addressSaved,HttpStatus.OK);

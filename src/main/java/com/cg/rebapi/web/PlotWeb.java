@@ -2,9 +2,13 @@ package com.cg.rebapi.web;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,41 +20,49 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.rebapi.exception.PlotException;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.model.Shop;
+import com.cg.rebapi.serviceimpl.AddressServiceImpl;
 import com.cg.rebapi.serviceimpl.PlotServiceImpl;
 
 @RestController
-@RequestMapping("/plots")
+@RequestMapping("api/plots")
 public class PlotWeb {
+	@Autowired
+	public PlotServiceImpl plotServiceImpl;
 	
 	@Autowired
-	public PlotServiceImpl plotService;
+	private AddressServiceImpl addressServiceImpl;
 	
-	@GetMapping("/getplots")
+	@GetMapping("")
 	public ResponseEntity<?> getPlots(){
-		List<Plot> plotList= plotService.listOfPlots();
+		List<Plot> plotList= plotServiceImpl.listOfPlots();
 		return new ResponseEntity<>(plotList,HttpStatus.OK);
 	}
 	
-	@PostMapping("/addplot")
-	public ResponseEntity<Plot> addPlot(@RequestBody Plot plot) {
-		Plot plotSaved=plotService.addPlot(plot);
-		return new ResponseEntity<Plot>(plotSaved, HttpStatus.CREATED);
+	@PostMapping("")
+	public ResponseEntity<?> addShop( @RequestBody Plot plot){
+		
+		if(addressServiceImpl.checkAddress(plot.getPlotAddress().getId())) {
+				Plot plotSaved=plotServiceImpl.addPlot(plot);
+				return new ResponseEntity<Plot>(plotSaved, HttpStatus.CREATED);
+		}
+		return new ResponseEntity<String>("plot cannot be added, Address id"+plot.getPlotAddress().getId()+ " not found" , HttpStatus.NOT_ACCEPTABLE);
 	}
-	@GetMapping("/getplot/{id}")
-	public ResponseEntity<?> getPlot(@PathVariable("id") long id) throws PlotException{
-		Plot p= plotService.getPlot(id);
-		return new ResponseEntity<>(p,HttpStatus.OK);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getPlot(@PathVariable("id") long id){
+		List<Plot> plotList= plotServiceImpl.listOfPlots();
+		return new ResponseEntity<>(plotList,HttpStatus.OK);
 		
 	}
-	@DeleteMapping("/deleteplot/{id}")
-	public ResponseEntity<?> deletePlot(@PathVariable("id") long bno) throws PlotException{
-		Plot plotSaved=plotService.deletePlot(bno);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> plotBroker(@PathVariable("id") long bno) throws PlotException{
+		Plot plotSaved=plotServiceImpl.deletePlot(bno);
 		return new ResponseEntity<>(plotSaved,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getplotstatus/{status}")
-	public ResponseEntity<?> getFlatStatus(@PathVariable("status") String status){
-		List<Plot> plotList= plotService.getPlotStatus(status);
+	@GetMapping("getstatus/{status}")
+	public ResponseEntity<?> getPlotStatus(@PathVariable("status") String status){
+		List<Plot> plotList= plotServiceImpl.getPlotStatus(status);
 		return new ResponseEntity<>(plotList,HttpStatus.OK);
 	}
 	

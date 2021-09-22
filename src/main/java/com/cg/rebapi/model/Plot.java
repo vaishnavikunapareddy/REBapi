@@ -19,7 +19,7 @@ import com.sun.istack.NotNull;
 public class Plot {
 	@Id 
 	
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	
 
 	private Long plotId;

@@ -20,7 +20,7 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public Address addAddress(Address address) {
-		if(address.getStreetName().isEmpty()||address.getPincode().length()==0)
+		if(address.getStreetName().isEmpty()||address.getPincode()==0)
 			throw new EmptyFieldException("601", "Input feilds are empty");
 		Address a= addressRepository.save(address);
 		return a;
@@ -43,7 +43,7 @@ public class AddressServiceImpl implements AddressService{
 	}
 	@Override
 	public Address getAddress(long id) throws AddressException {
-		// TODO Auto-generated method stub
+		
 		if(addressRepository.existsById(id)) {
 		Address address=addressRepository.findById(id).get();
 		return address;

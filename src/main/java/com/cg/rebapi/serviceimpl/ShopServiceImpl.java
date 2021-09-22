@@ -54,7 +54,7 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	public Shop getShop(long id) throws ShopException{
-		// TODO Auto-generated method stub
+		
 		if(shopRepository.existsById(id)) {
 			Shop s=shopRepository.findById(id).get();
 			return s;

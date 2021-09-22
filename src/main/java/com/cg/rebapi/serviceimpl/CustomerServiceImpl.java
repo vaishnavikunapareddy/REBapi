@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer getCustomer(long id) throws CustomerException{
-		// TODO Auto-generated method stub
+		
 		if(customerRepository.existsById(id)) {
 			Customer c=customerRepository.findById(id).get();
 			return c;

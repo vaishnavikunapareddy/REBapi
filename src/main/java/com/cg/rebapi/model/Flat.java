@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Flat {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@Size(min=3, message = "flat name should have minimum 3 characters")
 	@NotNull
@@ -101,7 +101,12 @@ public class Flat {
 		this.status = status;
 	}
 
-
+	public Address getFlatAddress() {
+		return flatAddress;
+	}
+	public void setFlatAddress(Address flatAddress) {
+		this.flatAddress = flatAddress;
+	}
 
 	@Override
 	public String toString() {

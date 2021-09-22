@@ -56,7 +56,7 @@ public class OwnerServiceImpl implements OwnerService{
 	}
 	@Override
 	public Owner getOwner(long id) throws OwnerException {
-		// TODO Auto-generated method stub
+		
 		if(ownerRepository.existsById(id)) {
 			Owner o=ownerRepository.findById(id).get();
 			return o;

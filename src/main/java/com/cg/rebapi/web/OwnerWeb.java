@@ -25,24 +25,24 @@ public class OwnerWeb {
 	@Autowired
 	public OwnerServiceImpl ownerService;
 	
-	@GetMapping("/getowners")
+	@GetMapping("")
 	public ResponseEntity<?> getOwners(){
 		List<Owner> brokerList= ownerService.listOfOwners();
 		return new ResponseEntity<>(brokerList,HttpStatus.OK);
 	}
 	
-	@PostMapping("/addowner")
+	@PostMapping("")
 	public ResponseEntity<Owner> addOwner(@RequestBody Owner owner) {
 		Owner ownerSaved=ownerService.addOwner(owner);
 		return new ResponseEntity<Owner>(ownerSaved, HttpStatus.CREATED);
 	}
-	@GetMapping("/ownerlist/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getBroker(@PathVariable("id") long id){
 		List<Owner> brokerList= ownerService.listOfOwners();
 		return new ResponseEntity<>(brokerList,HttpStatus.OK);
 		
 	}
-	@DeleteMapping("/deletebroker/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteBroker(@PathVariable("id") long bno) throws OwnerException{
 		Owner ownerSaved=ownerService.deleteOwner(bno);
 		return new ResponseEntity<>(ownerSaved,HttpStatus.OK);

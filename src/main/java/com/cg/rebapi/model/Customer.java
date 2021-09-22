@@ -1,5 +1,8 @@
 package com.cg.rebapi.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -18,7 +22,7 @@ import javax.validation.constraints.Size;
 @Table(name="customer")
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	
 	private Long id;
 	@NotNull
@@ -40,12 +44,16 @@ public class Customer {
     @JoinColumn(name = "address_id", nullable = false)
     private Address customerAddress;
 	
+	
+	
+	
 	public Customer() {
 		super();
 	}
 	
 	
 
+	
 	
 	public Customer(Long id,
 			@NotNull @Size(min = 2, message = "last name should contain minimum 2 characters") String customerLastName,
@@ -107,6 +115,10 @@ public class Customer {
 	public void setCustomerAddress(Address customerAddress) {
 		this.customerAddress = customerAddress;
 	}
+	
+
+
+
 
 
 

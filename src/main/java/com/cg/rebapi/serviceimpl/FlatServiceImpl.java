@@ -59,7 +59,7 @@ public class FlatServiceImpl implements FlatService{
 
 	@Override
 	public Flat getFlat(long id) throws FlatException{
-		// TODO Auto-generated method stub
+		
 		if(flatRepository.existsById(id)) {
 			Flat f=flatRepository.findById(id).get();
 			return f;

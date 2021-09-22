@@ -18,7 +18,7 @@ public class PropertyServiceImpl implements PropertyService{
 
 	@Override
 	public List<Property> getProperties() {
-		// TODO Auto-generated method stub
+		
 		List<Property> properties=propertyRepository.findAll();
 		if(properties.isEmpty())
 			throw new EmptyListException();
@@ -28,7 +28,7 @@ public class PropertyServiceImpl implements PropertyService{
 
 	@Override
 	public Property deleteProperty(long id) throws PropertyException {
-		// TODO Auto-generated method stub
+		
 		if(propertyRepository.existsById(id)) {
 			Property p=propertyRepository.findById(id).get();
 			propertyRepository.deleteById(id);
@@ -39,7 +39,7 @@ public class PropertyServiceImpl implements PropertyService{
 
 	@Override
 	public boolean checkProperty(long id) {
-		// TODO Auto-generated method stub
+		
 		if(propertyRepository.existsById(id))
 			return true;
 		return false;

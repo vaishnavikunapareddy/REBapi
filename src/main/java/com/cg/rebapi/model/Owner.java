@@ -21,7 +21,7 @@ import com.sun.istack.NotNull;
 	public class Owner {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@NotNull
 	private Long id;
 	@NotNull
@@ -42,6 +42,8 @@ import com.sun.istack.NotNull;
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address ownerAddress;
+	
+	
 
 	public Owner() {
 		super();
