@@ -27,13 +27,11 @@ public class BrokerServiceImpl implements BrokerService{
 		List<Broker> brokers=brokerRepository.findAll();
 		if(brokers.isEmpty())
 			throw new EmptyListException();
-		return brokers;
-		
+		return brokers;		
 	}
+	
 	@Override
 	public Broker addBroker(Broker broker) {
-		if(broker.getBrokerFirstName().isEmpty()||broker.getBrokerLastName().length()==0)
-			throw new EmptyFieldException("601", "Input feilds are empty");
 		Broker b= brokerRepository.save(broker);
 		return b;
 	}
@@ -63,7 +61,7 @@ public class BrokerServiceImpl implements BrokerService{
 			Broker b=brokerRepository.findById(id).get();
 			return b;
 		}
-		throw new BrokerException("Broker with id "+id+" is not there to update");
+		throw new BrokerException("Broker with id "+id+" is not found");
 	}
 	
 	@Override
@@ -75,7 +73,7 @@ public class BrokerServiceImpl implements BrokerService{
 				throw new EmptyListException();
 			return flatList;
 		}
-		throw new BrokerException("Broker with id "+id+" is not found");
+		throw new BrokerException("Broker with id "+id+" was not found");
 	}
 
 	@Override

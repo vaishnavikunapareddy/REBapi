@@ -38,7 +38,7 @@ public class ExceptionsHandler  extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		// TODO Auto-generated method stub
+		
 		return new ResponseEntity<Object>("Please change http method type",HttpStatus.BAD_REQUEST);
 		
 	}

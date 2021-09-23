@@ -89,6 +89,12 @@ public class BrokerWeb {
 		return new ResponseEntity<>(plotList,HttpStatus.OK);
 	}
 	
+//	@GetMapping("/search/{city}")
+//	public ResponseEntity<?> propertySearch(@PathVariable String city)throws BrokerException{
+//		List<Flat> flatList= brokerServiceImpl.propertySearch(city);
+//		return  new ResponseEntity<>(flatList,HttpStatus.OK);
+//	}
+	
 	
 
 }

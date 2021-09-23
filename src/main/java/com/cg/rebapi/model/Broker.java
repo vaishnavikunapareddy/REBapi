@@ -54,21 +54,15 @@ public class Broker {
 	@OneToMany
 	@JoinColumn(name="broker_id",referencedColumnName = "id")
 	List<Flat> flatList=new ArrayList<Flat>();
-	//mapping with plot
+	/*mapping with plot*/
 	@OneToMany
 	@JoinColumn(name="broker_id",referencedColumnName = "id")
 	List<Plot> plotList=new ArrayList<Plot>();
-	//mapping with shop
+	/*mapping with shop*/
 	@OneToMany
 	@JoinColumn(name="broker_id",referencedColumnName = "id")
 	List<Shop> shopList=new ArrayList<Shop>();
 	
-	/*
-	 * @OneToMany()
-	 * 
-	 * @JoinColumn(name="broker_id", referencedColumnName = "id") List<Property>
-	 * propertyList =new ArrayList<Property>();
-	 */
 	public Broker() {
 		super();
 	}
@@ -134,14 +128,7 @@ public class Broker {
 		this.customerList = customerList;
 	}
 	
-	
-//	public List<Property> getPropertyList() {
-//		return propertyList;
-//	}
-//	public void setPropertyList(List<Property> propertyList) {
-//		this.propertyList = propertyList;
-//	}
-	
+
 	public List<Flat> getFlatList() {
 		return flatList;
 	}

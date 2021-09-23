@@ -2,6 +2,8 @@ package com.cg.rebapi.web;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class AddressWeb {
 	}
 	
 	@PostMapping("/addaddress")
-	public ResponseEntity<Address> addAddress(@RequestBody Address address) {
+	public ResponseEntity<Address> addAddress(@Valid @RequestBody Address address) {
 		Address addressSaved=addressService.addAddress(address);
 		return new ResponseEntity<Address>(addressSaved, HttpStatus.CREATED);
 	}

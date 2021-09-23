@@ -63,10 +63,6 @@ public class Customer {
 		super();
 	}
 	
-	
-
-	
-	
 	public Customer(Long id,
 			@NotNull @Size(min = 2, message = "last name should contain minimum 2 characters") String customerLastName,
 			@NotNull @Size(min = 2, message = "first name should contain minimum 2 characters") String customerFirstName,
