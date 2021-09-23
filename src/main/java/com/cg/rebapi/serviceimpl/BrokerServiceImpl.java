@@ -6,9 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.rebapi.exception.BrokerException;
+import com.cg.rebapi.exception.CustomerException;
 import com.cg.rebapi.exception.EmptyFieldException;
 import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.model.Broker;
+import com.cg.rebapi.model.Customer;
+import com.cg.rebapi.model.Flat;
+import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.model.Shop;
 import com.cg.rebapi.repository.BrokerRepository;
 import com.cg.rebapi.service.BrokerService;
 
@@ -59,6 +64,42 @@ public class BrokerServiceImpl implements BrokerService{
 			return b;
 		}
 		throw new BrokerException("Broker with id "+id+" is not there to update");
+	}
+	
+	@Override
+	public List<Flat> listOfFlat(long id)throws BrokerException{
+		if(brokerRepository.existsById(id)) {
+			Broker broker= brokerRepository.findById(id).get();
+			List<Flat> flatList= broker.getFlatList();
+			if(flatList.size()==0)
+				throw new EmptyListException();
+			return flatList;
+		}
+		throw new BrokerException("Broker with id "+id+" is not found");
+	}
+
+	@Override
+	public List<Shop> listOfShop(long id)throws BrokerException{
+		if(brokerRepository.existsById(id)) {
+			Broker broker= brokerRepository.findById(id).get();
+			List<Shop> shopList= broker.getShopList();
+			if(shopList.size()==0)
+				throw new EmptyListException();
+			return shopList;
+		}
+		throw new BrokerException("Broker with id "+id+" is not found");
+	}
+	
+	@Override
+	public List<Plot> listOfPlot(long id)throws BrokerException{
+		if(brokerRepository.existsById(id)) {
+			Broker broker=brokerRepository.findById(id).get();
+			List<Plot> plotList= broker.getPlotList();
+			if(plotList.size()==0)
+				throw new EmptyListException();
+			return plotList;
+		}
+		throw new BrokerException("Customer with id "+id+" is not found");
 	}
 
 	

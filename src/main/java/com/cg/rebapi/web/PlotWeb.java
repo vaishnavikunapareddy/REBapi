@@ -2,13 +2,13 @@ package com.cg.rebapi.web;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.exception.PlotException;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
@@ -40,7 +41,12 @@ public class PlotWeb {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> addShop( @RequestBody Plot plot){
+	public ResponseEntity<?> addShop(@Valid @RequestBody Plot plot, BindingResult bindingResult) throws MethodArgumentsNotValidException{
+		if(bindingResult.hasErrors()) {
+			throw new MethodArgumentsNotValidException();
+		}
+		else if(plot.getPlotAddress()==null)
+			return new ResponseEntity<String>("plot should have address, please provide address" , HttpStatus.NOT_ACCEPTABLE);
 		
 		if(addressServiceImpl.checkAddress(plot.getPlotAddress().getId())) {
 				Plot plotSaved=plotServiceImpl.addPlot(plot);

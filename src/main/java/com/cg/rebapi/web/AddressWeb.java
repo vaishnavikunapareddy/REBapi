@@ -32,7 +32,7 @@ public class AddressWeb {
 		return new ResponseEntity<>(brokerList,HttpStatus.OK);
 	}
 	
-	@PostMapping("")
+	@PostMapping("/addaddress")
 	public ResponseEntity<Address> addAddress(@RequestBody Address address) {
 		Address addressSaved=addressService.addAddress(address);
 		return new ResponseEntity<Address>(addressSaved, HttpStatus.CREATED);

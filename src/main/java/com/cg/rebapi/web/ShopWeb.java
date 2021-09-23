@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.exception.ShopException;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
@@ -41,7 +42,12 @@ public class ShopWeb {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> addShop(@Valid @RequestBody Shop shop){
+	public ResponseEntity<?> addOrUpdateShop(@Valid @RequestBody Shop shop, BindingResult bindingResult) throws MethodArgumentsNotValidException{
+		if(bindingResult.hasErrors()) {
+			throw new MethodArgumentsNotValidException();
+		}
+		if(shop.getShopAddress()==null)
+			return new ResponseEntity<String>("shop should have address, please provide address" , HttpStatus.NOT_ACCEPTABLE);
 		
 		if(addressService.checkAddress(shop.getShopAddress().getId())) {
 				Shop shopSaved=shopService.addShop(shop);

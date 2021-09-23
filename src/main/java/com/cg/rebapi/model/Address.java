@@ -52,31 +52,35 @@ public class Address {
 	
 	
 	@NotNull
-	@Size(min = 6, message = "pin code should have atleast 6 character")
 	private Integer pincode;
 	
 
-	
+	/* Mapping  with Flat */
 	@OneToOne(mappedBy = "flatAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Flat flat;
 	
+	/* Mapping  with plot */
 	@OneToOne(mappedBy = "plotAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Plot plot;
 
+	/* Mapping  with plot */
 	@OneToOne(mappedBy = "shopAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Shop shop;
 
+	/* Mapping  with broker */
 	@OneToOne(mappedBy = "brokerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Broker broker;
 	
+	/* Mapping  with customer */
 	@OneToOne(mappedBy = "customerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Customer customer;
 	
+	/* Mapping  with owner */
 	@OneToOne(mappedBy = "ownerAddress", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Owner owner;
@@ -86,14 +90,6 @@ public class Address {
 	}
 
 	
-	
-
-
-	
-
-
-
-
 
 	public Address(Long id, @Size(min = 3, message = "street number should have atleast 3 character") String streetNo,
 			@Size(min = 3, message = "street name should have atleast 3 character") String streetName,
@@ -117,14 +113,6 @@ public class Address {
 		this.customer = customer;
 		this.owner = owner;
 	}
-
-
-
-
-
-
-
-
 
 
 
@@ -228,15 +216,7 @@ public class Address {
 	}
 
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
+	
 
 	public Owner getOwner() {
 		return owner;
@@ -246,6 +226,18 @@ public class Address {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
+	
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 
 
 	@Override

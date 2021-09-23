@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.exception.FlatException;
+import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.repository.FlatRepository;
@@ -42,7 +43,12 @@ public class FlatWeb {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> addOrUpdateFlat(@Valid @RequestBody Flat flat) {
+	public ResponseEntity<?> addOrUpdateFlat(@Valid @RequestBody Flat flat, BindingResult bindingResult) throws MethodArgumentsNotValidException {
+		if(bindingResult.hasErrors()) {
+			throw new MethodArgumentsNotValidException();
+		}
+		if(flat.getFlatAddress()==null)
+			return new ResponseEntity<String>("Flat should have address, please provide address" , HttpStatus.NOT_ACCEPTABLE);
 		
 		if(addressServiceImpl.checkAddress(flat.getFlatAddress().getId())) {
 				Flat flatSaved=flatServiceImpl.addFlat(flat);

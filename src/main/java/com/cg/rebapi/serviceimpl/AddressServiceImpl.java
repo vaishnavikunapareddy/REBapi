@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService{
 	}
 	@Override
 	public List<Address> getAddresses() {
-		// TODO Auto-generated method stub
+		
 		List<Address> addresses=addressRepository.findAll();
 		if(addresses.isEmpty())
 			throw new EmptyListException();

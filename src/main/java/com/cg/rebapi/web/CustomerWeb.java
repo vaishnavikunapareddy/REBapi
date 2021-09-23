@@ -2,13 +2,14 @@ package com.cg.rebapi.web;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.rebapi.exception.CustomerException;
-import com.cg.rebapi.model.Broker;
+import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.model.Customer;
+import com.cg.rebapi.model.Flat;
+import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.model.Shop;
 import com.cg.rebapi.serviceimpl.AddressServiceImpl;
 import com.cg.rebapi.serviceimpl.CustomerServiceImpl;
 
@@ -34,10 +38,14 @@ public class CustomerWeb {
 	private AddressServiceImpl addressServiceImpl;
 	
 	@PostMapping("")
-	public ResponseEntity<?> addOrUpdateCustomer(@Valid @RequestBody Customer customer, BindingResult bindingResult) throws MethodArgumentNotValidException {
-		//if(bindingResult.hasErrors())
-		//	throw new MethodArgumentNotValidException())
-		if(addressServiceImpl.checkAddress(customer.getCustomerAddress().getId())) {
+	public ResponseEntity<?> addOrUpdateCustomer(@Valid @RequestBody Customer customer, BindingResult bindingResult) throws MethodArgumentsNotValidException {
+		if(bindingResult.hasErrors()) {
+			throw new MethodArgumentsNotValidException();
+		}
+
+		else if(customer.getCustomerAddress()==null)
+			return new ResponseEntity<String>("Customer should have address, please provide address" , HttpStatus.NOT_ACCEPTABLE);
+		else if(addressServiceImpl.checkAddress(customer.getCustomerAddress().getId())) {
 				Customer customerSaved=customerServiceImpl.addCustomer(customer);
 				return new ResponseEntity<Customer>(customerSaved, HttpStatus.CREATED);
 		}
@@ -57,11 +65,28 @@ public class CustomerWeb {
 		
 	}
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteCustomer(@PathVariable("id") long bno) throws CustomerException{
-		Customer customerSaved=customerServiceImpl.deleteCustomer(bno);
+	public ResponseEntity<?> deleteCustomer(@PathVariable("id") long id) throws CustomerException{
+		Customer customerSaved=customerServiceImpl.deleteCustomer(id);
 		return new ResponseEntity<>(customerSaved,HttpStatus.OK);
 	}
 	
+	@GetMapping("/flatlist/{id}")
+	public ResponseEntity<?> listOfFlat(@PathVariable("id") long id) throws CustomerException{
+		List<Flat> flatList= customerServiceImpl.listOfFlat(id);
+		return new ResponseEntity<>(flatList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/shoplist/{id}")
+	public ResponseEntity<?> listOfShop(@PathVariable("id") long id) throws CustomerException{
+		List<Shop> shopList= customerServiceImpl.listOfShop(id);
+		return new ResponseEntity<>(shopList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/plotlist/{id}")
+	public ResponseEntity<?> listOfPlot(@PathVariable("id") long id) throws CustomerException{
+		List<Plot> plotList= customerServiceImpl.listOfPlot(id);
+		return new ResponseEntity<>(plotList,HttpStatus.OK);
+	}
 	
 	
 

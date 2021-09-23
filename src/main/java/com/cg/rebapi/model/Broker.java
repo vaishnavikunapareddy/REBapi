@@ -26,7 +26,6 @@ import javax.persistence.Table;
 @Table(name="broker")
 public class Broker {
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotNull
@@ -34,26 +33,42 @@ public class Broker {
 	private String brokerFirstName;
 	@NotNull
 	@Size(min=2, message="last name should contain minimum 2 characters")
-	
 	private String brokerLastName;
 	@NotNull
-	
 	private Long contact;
 	@NotNull
 	@Email
 	private String email;
 	//mapping with address
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id")
     private Address brokerAddress;
 	
-	//mapping with customer
 	
+	//mapping with customer
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="broker_id", referencedColumnName = "id")
 	List<Customer> customerList= new ArrayList<Customer>();
 	
-
+	//mapping with flat
+	@OneToMany
+	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	List<Flat> flatList=new ArrayList<Flat>();
+	//mapping with plot
+	@OneToMany
+	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	List<Plot> plotList=new ArrayList<Plot>();
+	//mapping with shop
+	@OneToMany
+	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	List<Shop> shopList=new ArrayList<Shop>();
+	
+	/*
+	 * @OneToMany()
+	 * 
+	 * @JoinColumn(name="broker_id", referencedColumnName = "id") List<Property>
+	 * propertyList =new ArrayList<Property>();
+	 */
 	public Broker() {
 		super();
 	}
@@ -111,6 +126,7 @@ public class Broker {
 	public void setBrokerAddress(Address brokerAddress) {
 		this.brokerAddress = brokerAddress;
 	}
+	
 	public List<Customer> getCustomerList() {
 		return customerList;
 	}
@@ -118,7 +134,32 @@ public class Broker {
 		this.customerList = customerList;
 	}
 	
-//	
+	
+//	public List<Property> getPropertyList() {
+//		return propertyList;
+//	}
+//	public void setPropertyList(List<Property> propertyList) {
+//		this.propertyList = propertyList;
+//	}
+	
+	public List<Flat> getFlatList() {
+		return flatList;
+	}
+	public void setFlatList(List<Flat> flatList) {
+		this.flatList = flatList;
+	}
+	public List<Plot> getPlotList() {
+		return plotList;
+	}
+	public void setPlotList(List<Plot> plotList) {
+		this.plotList = plotList;
+	}
+	public List<Shop> getShopList() {
+		return shopList;
+	}
+	public void setShopList(List<Shop> shopList) {
+		this.shopList = shopList;
+	}
 	@Override
 	public String toString() {
 		return "Broker [id=" + id + ", brokerFirstName=" + brokerFirstName + ", brokerLastName=" + brokerLastName

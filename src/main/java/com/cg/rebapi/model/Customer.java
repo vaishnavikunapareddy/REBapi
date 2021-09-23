@@ -44,6 +44,18 @@ public class Customer {
     @JoinColumn(name = "address_id", nullable = false)
     private Address customerAddress;
 	
+	@OneToMany
+	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	private List<Flat> flatList=new ArrayList<Flat>();
+	
+	@OneToMany
+	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	private List<Plot> plotList=new ArrayList<Plot>();
+	
+	@OneToMany
+	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	private List<Shop> shopList=new ArrayList<Shop>();
+	
 	
 	
 	
@@ -117,7 +129,55 @@ public class Customer {
 	}
 	
 
+	
 
+
+
+
+
+	public List<Flat> getFlatList() {
+		return flatList;
+	}
+
+
+
+
+
+	public void setFlatList(List<Flat> flatList) {
+		this.flatList = flatList;
+	}
+
+
+
+
+
+	public List<Plot> getPlotList() {
+		return plotList;
+	}
+
+
+
+
+
+	public void setPlotList(List<Plot> plotList) {
+		this.plotList = plotList;
+	}
+
+
+	
+
+
+	public List<Shop> getShopList() {
+		return shopList;
+	}
+
+
+
+
+
+	public void setShopList(List<Shop> shopList) {
+		this.shopList = shopList;
+	}
 
 
 

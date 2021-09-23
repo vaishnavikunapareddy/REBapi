@@ -2,29 +2,32 @@ package com.cg.rebapi.web;
 
 import java.util.List;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.rebapi.exception.BrokerException;
 import com.cg.rebapi.exception.CustomerException;
-import com.cg.rebapi.model.Address;
+import com.cg.rebapi.exception.MethodArgumentsNotValidException;
+
 import com.cg.rebapi.model.Broker;
-import com.cg.rebapi.model.Customer;
-import com.cg.rebapi.service.AddressService;
+import com.cg.rebapi.model.Flat;
+import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.model.Shop;
 import com.cg.rebapi.serviceimpl.AddressServiceImpl;
 import com.cg.rebapi.serviceimpl.BrokerServiceImpl;
 
@@ -44,9 +47,13 @@ public class BrokerWeb {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> addBroker(@RequestBody Broker broker){
-		
-		if(addressServiceImpl.checkAddress(broker.getBrokerAddress().getId())) {
+	public ResponseEntity<?> addOrUPdateBroker(@Valid @RequestBody Broker broker, BindingResult bindingResult) throws MethodArgumentsNotValidException{
+		if(bindingResult.hasErrors()) {
+				throw new MethodArgumentsNotValidException();
+			}
+		else if((broker.getBrokerAddress()==null))
+				return new ResponseEntity<String>("Broker should have address, please provide address" , HttpStatus.NOT_ACCEPTABLE);
+		else if(addressServiceImpl.checkAddress(broker.getBrokerAddress().getId())) {
 				Broker brokerSaved=brokerServiceImpl.addBroker(broker);
 				return new ResponseEntity<Broker>(brokerSaved, HttpStatus.CREATED);
 		}
@@ -64,6 +71,23 @@ public class BrokerWeb {
 		return new ResponseEntity<>(brokerSaved,HttpStatus.OK);
 	}
 	
+	@GetMapping("/flatlist/{id}")
+	public ResponseEntity<?> listOfFlat(@PathVariable("id") long id) throws BrokerException{
+		List<Flat> flatList= brokerServiceImpl.listOfFlat(id);
+		return new ResponseEntity<>(flatList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/shoplist/{id}")
+	public ResponseEntity<?> listOfShop(@PathVariable("id") long id) throws BrokerException{
+		List<Shop> shopList= brokerServiceImpl.listOfShop(id);
+		return new ResponseEntity<>(shopList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/plotlist/{id}")
+	public ResponseEntity<?> listOfPlot(@PathVariable("id") long id) throws BrokerException{
+		List<Plot> plotList= brokerServiceImpl.listOfPlot(id);
+		return new ResponseEntity<>(plotList,HttpStatus.OK);
+	}
 	
 	
 
