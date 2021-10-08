@@ -25,28 +25,6 @@ import com.cg.rebapi.serviceimpl.BrokerServiceImpl;
 import com.cg.rebapi.serviceimpl.UserServiceImpl;
 
 
-//@RestController
-//@RequestMapping("api/users")
-//public class userWeb {
-//	@Autowired
-//	public UserServiceImpl userService;
-//	
-//	@PostMapping("/login")
-//	public ResponseEntity<?> validate(@RequestBody User user) {
-//		
-//		if(userService.validate(user)){
-//				return new ResponseEntity<String>("Logged in successfully", HttpStatus.OK);
-//			}
-//		return new ResponseEntity<String>("Login Failed!!", HttpStatus.NOT_ACCEPTABLE);
-//	}
-//	
-//	@GetMapping("")
-//	public List<User> getUsers() {
-//		return userService.getAllUsers();
-//	}
-//	
-//
-//}
 @RestController
 @RequestMapping("/api/users")
 public class UserWeb {	
@@ -83,7 +61,7 @@ public class UserWeb {
 		throw new UserNotFoundException(userName);
 	}
 	
-	@GetMapping("/validate")
+	@GetMapping("/login")
 	public ResponseEntity<?> userValidate(@RequestBody User user){		
 		if(userServiceimpl.validateUser(user)){
 				return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);

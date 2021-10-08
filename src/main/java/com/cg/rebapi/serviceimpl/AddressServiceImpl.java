@@ -32,7 +32,8 @@ public class AddressServiceImpl implements AddressService{
 		addressRepository.deleteById(id);
 		return a;
 		}
-		throw new AddressException("Address with id "+id + " is not there to delete");
+		//throw new AddressException("Address with id "+id + " is not there to delete");
+		return null;
 	}
 	
 	public boolean checkAddress(long id) {
@@ -59,7 +60,7 @@ public class AddressServiceImpl implements AddressService{
 			throw new EmptyListException();
 		return addresses;
 	}
-
+	
 	
 	
 

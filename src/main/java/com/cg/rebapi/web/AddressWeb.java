@@ -48,7 +48,10 @@ public class AddressWeb {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteaddress(@PathVariable("id") long id) throws AddressException{
 		Address addressSaved=addressService.deleteAddress(id);
-		return new ResponseEntity<>(addressSaved,HttpStatus.OK);
+		if(addressSaved==null) {
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 		
 	

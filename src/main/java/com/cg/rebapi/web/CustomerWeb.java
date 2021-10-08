@@ -53,13 +53,13 @@ public class CustomerWeb {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getBroker(@PathVariable("id") long id) throws CustomerException{
+	public ResponseEntity<?> getCustomer(@PathVariable("id") long id) throws CustomerException{
 		Customer customer=customerServiceImpl.getCustomer(id);
 		return new ResponseEntity<>(customer,HttpStatus.OK);
 		
 	}
 	@GetMapping("")
-	public ResponseEntity<?> getCustomer(){
+	public ResponseEntity<?> getCustomers(){
 		List<Customer> customerList= customerServiceImpl.listOfCustomers();
 		return new ResponseEntity<>(customerList,HttpStatus.OK);
 		

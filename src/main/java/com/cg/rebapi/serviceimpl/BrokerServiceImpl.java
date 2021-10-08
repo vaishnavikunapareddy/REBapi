@@ -9,11 +9,13 @@ import com.cg.rebapi.exception.BrokerException;
 import com.cg.rebapi.exception.CustomerException;
 import com.cg.rebapi.exception.EmptyFieldException;
 import com.cg.rebapi.exception.EmptyListException;
+import com.cg.rebapi.model.Address;
 import com.cg.rebapi.model.Broker;
 import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
+import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.repository.BrokerRepository;
 import com.cg.rebapi.service.BrokerService;
 
@@ -22,6 +24,9 @@ public class BrokerServiceImpl implements BrokerService{
 	
 	@Autowired
 	BrokerRepository brokerRepository;
+	
+	@Autowired
+	AddressRepository addressRepository;
 	@Override
 	public List<Broker> listOfBrokers(){
 		List<Broker> brokers=brokerRepository.findAll();
@@ -99,6 +104,7 @@ public class BrokerServiceImpl implements BrokerService{
 		}
 		throw new BrokerException("Customer with id "+id+" is not found");
 	}
+
 
 	
 	

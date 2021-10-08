@@ -9,6 +9,6 @@ import com.cg.rebapi.model.Broker;
 @Repository
 public interface BrokerRepository extends JpaRepository<Broker, Long>{
 	
-	
+
 
 }

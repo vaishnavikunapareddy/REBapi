@@ -1,9 +1,6 @@
 package com.cg.rebapi.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -23,9 +20,7 @@ public class User {
 	@JoinColumn(name= "userId", referencedColumnName = "id")
 	private Broker broker;
 	
-//	@OneToOne
-//	@JoinColumn(name= "userId", referencedColumnName = "id", updatable = false, insertable = false)
-//	private Customer customer;
+
 
 	public User() {
 		super();
