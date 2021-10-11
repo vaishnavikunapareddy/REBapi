@@ -12,6 +12,7 @@ import com.cg.rebapi.exception.FlatException;
 import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.repository.FlatRepository;
 import com.cg.rebapi.service.FlatService;
 
@@ -23,18 +24,22 @@ public class FlatServiceImpl implements FlatService{
 	@Autowired
 	FlatRepository flatRepository;
 	
+	@Autowired
+	AddressRepository addressRepository;
+	
 	@Override
 	public List<Flat> listOfFlats() throws EmptyListException{
 		List<Flat> flatList=flatRepository.findAll();
 		if(flatList.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return flatList;
 		
 	}
 	@Override
 	public Flat addFlat(Flat flat) {
-		if(flat.getFlatName().isEmpty()||flat.getFlatName().length()==0)
-			throw new EmptyFieldException("601", "Input feilds are empty");
+//		if(flat.getFlatName().isEmpty()||flat.getFlatName().length()==0)
+//			throw new EmptyFieldException("601", "Input feilds are empty");
 		Flat f= flatRepository.save(flat);
 		return f;
 	}
@@ -44,10 +49,14 @@ public class FlatServiceImpl implements FlatService{
 	public Flat deleteFlat(long id) throws FlatException  {
 		if(flatRepository.existsById(id)) {
 		Flat f=flatRepository.findById(id).get();
+		addressRepository.deleteById(f.getFlatAddress().getId());
+		
+		
 		flatRepository.deleteById(id);
 		return f;
 		}
-		throw new FlatException("Flat with id "+id + " is not there to delete");
+		//throw new FlatException("Flat with id "+id + " is not there to delete");
+		return null;
 	}
 	@Override
 	public boolean checkFlat(long id) {
@@ -64,13 +73,15 @@ public class FlatServiceImpl implements FlatService{
 			Flat f=flatRepository.findById(id).get();
 			return f;
 		}
-		throw new FlatException("Flat with id "+id+" is not there to update");
+		//throw new FlatException("Flat with id "+id+" is not there to update");
+		return null;
 	}
 	@Override
 	public List<Flat> getFlatStatus(String status){
 		List<Flat> flatList=flatRepository.getFlatStatus(status);
 		if(flatList.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return flatList;
 		
 	}

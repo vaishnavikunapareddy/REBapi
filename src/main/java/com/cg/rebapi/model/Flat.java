@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -37,6 +38,10 @@ public class Flat {
     @JoinColumn(name = "address_id", nullable = false)
     private Address flatAddress;
 	
+	@ManyToOne
+	
+	private Broker broker;
+	
 	public Flat() {
 		super();
 	}
@@ -54,6 +59,24 @@ public class Flat {
 		this.squareFeet = squareFeet;
 		this.status = status;
 	}
+	
+
+	public Flat(Long id,
+			@Size(min = 3, message = "flat name should have minimum 3 characters") @NotNull String flatName,
+			@NotNull Integer price, @NotNull String type, @NotNull String squareFeet, @NotNull String status,
+			Address flatAddress, Broker broker) {
+		super();
+		this.id = id;
+		this.flatName = flatName;
+		this.price = price;
+		this.type = type;
+		this.squareFeet = squareFeet;
+		this.status = status;
+		this.flatAddress = flatAddress;
+		this.broker = broker;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -107,6 +130,18 @@ public class Flat {
 	public void setFlatAddress(Address flatAddress) {
 		this.flatAddress = flatAddress;
 	}
+
+	public Broker getBroker() {
+		return broker;
+	}
+
+
+
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+
+
 
 	@Override
 	public String toString() {

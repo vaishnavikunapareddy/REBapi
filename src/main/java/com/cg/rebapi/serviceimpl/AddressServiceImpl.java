@@ -20,8 +20,8 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public Address addAddress(Address address) {
-		if(address.getStreetName().isEmpty()||address.getPincode()==0)
-			throw new EmptyFieldException("601", "Input feilds are empty");
+//		if(address.getStreetName().isEmpty()||address.getPincode()==0)
+//			throw new EmptyFieldException("601", "Input feilds are empty");
 		Address a= addressRepository.save(address);
 		return a;
 	}
@@ -49,7 +49,8 @@ public class AddressServiceImpl implements AddressService{
 		Address address=addressRepository.findById(id).get();
 		return address;
 		}
-		throw new AddressException("Address with id "+id+" is not present");
+		//throw new AddressException("Address with id "+id+" is not present");
+		return null;
 		
 	}
 	@Override
@@ -57,7 +58,8 @@ public class AddressServiceImpl implements AddressService{
 		
 		List<Address> addresses=addressRepository.findAll();
 		if(addresses.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return addresses;
 	}
 	

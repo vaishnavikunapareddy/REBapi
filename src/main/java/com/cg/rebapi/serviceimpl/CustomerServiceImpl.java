@@ -13,6 +13,7 @@ import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
+import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.repository.CustomerRepository;
 import com.cg.rebapi.service.CustomerService;
 
@@ -24,18 +25,21 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	CustomerRepository customerRepository;
+	@Autowired
+	AddressRepository addressRepository;
 	@Override
 	public List<Customer> listOfCustomers(){
 		List<Customer> customers=customerRepository.findAll();
 		if(customers.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return customers;
 		
 	}
 	@Override
 	public Customer addCustomer(Customer customer) {
-		if(customer.getCustomerFirstName().isEmpty()||customer.getCustomerFirstName().length()==0)
-			throw new EmptyFieldException("601", "Input feilds are empty");
+		//if(customer.getCustomerFirstName().isEmpty()||customer.getCustomerFirstName().length()==0)
+			//throw new EmptyFieldException("601", "Input feilds are empty");
 		Customer c= customerRepository.save(customer);
 		return c;
 	}
@@ -45,10 +49,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer deleteCustomer(long id) throws CustomerException  {
 		if(customerRepository.existsById(id)) {
 			Customer c=customerRepository.findById(id).get();
+			addressRepository.deleteById(c.getCustomerAddress().getId());
 			customerRepository.deleteById(id);
 		return c;
 		}
-		throw new CustomerException("Customer with id "+id + " is not there to delete");
+		//throw new CustomerException("Customer with id "+id + " is not there to delete");
+		return null;
 	}
 	@Override
 	public boolean checkCustomer(long id) {
@@ -65,7 +71,8 @@ public class CustomerServiceImpl implements CustomerService {
 			Customer customer=customerRepository.findById(id).get();
 			return customer;
 		}
-		throw new CustomerException("Customer with id "+id+" is not found");
+		//throw new CustomerException("Customer with id "+id+" is not found");
+		return null;
 	}
 	@Override
 	public List<Flat> listOfFlat(long id)throws CustomerException{
@@ -73,10 +80,12 @@ public class CustomerServiceImpl implements CustomerService {
 			Customer customer=customerRepository.findById(id).get();
 			List<Flat> flatList= customer.getFlatList();
 			if(flatList.size()==0)
-				throw new EmptyListException();
+				//throw new EmptyListException();
+				return null;
 			return flatList;
 		}
-		throw new CustomerException("Customer with id "+id+" is not found");
+		//throw new CustomerException("Customer with id "+id+" is not found");return null;
+		return null;
 	}
 
 	@Override
@@ -85,10 +94,12 @@ public class CustomerServiceImpl implements CustomerService {
 			Customer customer=customerRepository.findById(id).get();
 			List<Shop> shopList= customer.getShopList();
 			if(shopList.size()==0)
-				throw new EmptyListException();
+				//throw new EmptyListException();
+				return null;
 			return shopList;
 		}
-		throw new CustomerException("Customer with id "+id+" is not found");
+		//throw new CustomerException("Customer with id "+id+" is not found");
+		return null;
 	}
 	
 	@Override
@@ -97,10 +108,12 @@ public class CustomerServiceImpl implements CustomerService {
 			Customer customer=customerRepository.findById(id).get();
 			List<Plot> plotList= customer.getPlotList();
 			if(plotList.size()==0)
-				throw new EmptyListException();
+				//throw new EmptyListException();
+				return null;
 			return plotList;
 		}
-		throw new CustomerException("Customer with id "+id+" is not found");
+		//throw new CustomerException("Customer with id "+id+" is not found");
+		return null;
 	}
 
 	

@@ -3,6 +3,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +51,9 @@ public class Broker {
 	List<Customer> customerList= new ArrayList<Customer>();
 	
 	//mapping with flat
-	@OneToMany
-	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="broker")
+	@JsonIgnore
+	//@JoinColumn(name="broker_id",referencedColumnName = "id")
 	List<Flat> flatList=new ArrayList<Flat>();
 	/*mapping with plot*/
 	@OneToMany

@@ -31,7 +31,9 @@ public class BrokerServiceImpl implements BrokerService{
 	public List<Broker> listOfBrokers(){
 		List<Broker> brokers=brokerRepository.findAll();
 		if(brokers.isEmpty())
-			throw new EmptyListException();
+//			throw new EmptyListException();
+			return null;
+		
 		return brokers;		
 	}
 	
@@ -46,10 +48,12 @@ public class BrokerServiceImpl implements BrokerService{
 	public Broker deleteBroker(long id) throws BrokerException  {
 		if(brokerRepository.existsById(id)) {
 		Broker b=brokerRepository.findById(id).get();
+		addressRepository.deleteById(b.getBrokerAddress().getId());
 		brokerRepository.deleteById(id);
 		return b;
 		}
-		throw new BrokerException("Broker with id "+id + " is not there to delete");
+		//throw new BrokerException("Broker with id "+id + " is not there to delete");
+		return null;
 	}
 	@Override
 	public boolean checkBroker(long id) {
@@ -64,9 +68,11 @@ public class BrokerServiceImpl implements BrokerService{
 		
 		if(brokerRepository.existsById(id)) {
 			Broker b=brokerRepository.findById(id).get();
+			
 			return b;
 		}
-		throw new BrokerException("Broker with id "+id+" is not found");
+		//throw new BrokerException("Broker with id "+id+" is not found");
+		return null;
 	}
 	
 	@Override
@@ -74,11 +80,13 @@ public class BrokerServiceImpl implements BrokerService{
 		if(brokerRepository.existsById(id)) {
 			Broker broker= brokerRepository.findById(id).get();
 			List<Flat> flatList= broker.getFlatList();
-			if(flatList.size()==0)
-				throw new EmptyListException();
+			if(flatList.isEmpty())
+				//throw new EmptyListException();
+				return null;
 			return flatList;
 		}
-		throw new BrokerException("Broker with id "+id+" was not found");
+		//throw new BrokerException("Broker with id "+id+" was not found");
+		return null;
 	}
 
 	@Override
@@ -86,11 +94,13 @@ public class BrokerServiceImpl implements BrokerService{
 		if(brokerRepository.existsById(id)) {
 			Broker broker= brokerRepository.findById(id).get();
 			List<Shop> shopList= broker.getShopList();
-			if(shopList.size()==0)
-				throw new EmptyListException();
+			if(shopList.isEmpty())
+				//throw new EmptyListException();
+				return null;
 			return shopList;
 		}
-		throw new BrokerException("Broker with id "+id+" is not found");
+		//throw new BrokerException("Broker with id "+id+" is not found");
+		return null;
 	}
 	
 	@Override
@@ -98,11 +108,13 @@ public class BrokerServiceImpl implements BrokerService{
 		if(brokerRepository.existsById(id)) {
 			Broker broker=brokerRepository.findById(id).get();
 			List<Plot> plotList= broker.getPlotList();
-			if(plotList.size()==0)
-				throw new EmptyListException();
+			if(plotList.isEmpty())
+				//throw new EmptyListException();
+				return null;
 			return plotList;
 		}
-		throw new BrokerException("Customer with id "+id+" is not found");
+		//throw new BrokerException("Customer with id "+id+" is not found");
+		return null;
 	}
 
 

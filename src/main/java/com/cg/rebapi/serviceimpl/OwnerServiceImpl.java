@@ -14,6 +14,7 @@ import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Owner;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
+import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.repository.OwnerRepository;
 import com.cg.rebapi.service.OwnerService;
 
@@ -22,19 +23,24 @@ public class OwnerServiceImpl implements OwnerService{
 	
 	@Autowired
 	public OwnerRepository ownerRepository;
+	
+	@Autowired
+	AddressRepository addressRepository;
 
 	@Override
 	public List<Owner> listOfOwners(){
 		List<Owner> owners=ownerRepository.findAll();
 		if(owners.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return owners;
 		
 	}
 	@Override
 	public Owner addOwner(Owner owner) {
 		if(owner.getFirstName().isEmpty()||owner.getFirstName().length()==0)
-			throw new EmptyFieldException("601", "Input feilds are empty");
+			//throw new EmptyFieldException("601", "Input feilds are empty");
+			return null;
 		Owner b= ownerRepository.save(owner);
 		return b;
 	}
@@ -44,10 +50,12 @@ public class OwnerServiceImpl implements OwnerService{
 	public Owner deleteOwner(long id) throws OwnerException  {
 		if(ownerRepository.existsById(id)) {
 		Owner b=ownerRepository.findById(id).get();
+		addressRepository.deleteById(b.getOwnerAddress().getId());
 		ownerRepository.deleteById(id);
 		return b;
 		}
-		throw new OwnerException("Owner with id "+id + " is not there to delete");
+		//throw new OwnerException("Owner with id "+id + " is not there to delete");
+		return null;
 	}
 	@Override
 	public boolean checkOwner(long id) {
@@ -63,7 +71,8 @@ public class OwnerServiceImpl implements OwnerService{
 			Owner o=ownerRepository.findById(id).get();
 			return o;
 		}
-		throw new OwnerException("Owner with id "+id+" is not there to update");	
+		//throw new OwnerException("Owner with id "+id+" is not there to update");
+		return null;
 	}
 
 	@Override
@@ -72,10 +81,12 @@ public class OwnerServiceImpl implements OwnerService{
 			Owner owner= ownerRepository.findById(id).get();
 			List<Flat> flatList= owner.getFlatList();
 			if(flatList.size()==0)
-				throw new EmptyListException();
+				//throw new EmptyListException();
+				return null;
 			return flatList;
 		}
-		throw new OwnerException("Broker with id "+id+" is not found");
+		//throw new OwnerException("Broker with id "+id+" is not found");
+		return null;
 	}
 
 	@Override
@@ -84,10 +95,12 @@ public class OwnerServiceImpl implements OwnerService{
 			Owner owner= ownerRepository.findById(id).get();
 			List<Shop> shopList= owner.getShopList();
 			if(shopList.size()==0)
-				throw new EmptyListException();
+				//throw new EmptyListException();
+				return null;
 			return shopList;
 		}
-		throw new OwnerException("Broker with id "+id+" is not found");
+		//throw new OwnerException("Broker with id "+id+" is not found");
+		return null;
 	}
 	
 	@Override
@@ -96,10 +109,12 @@ public class OwnerServiceImpl implements OwnerService{
 			Owner owner=ownerRepository.findById(id).get();
 			List<Plot> plotList= owner.getPlotList();
 			if(plotList.size()==0)
-				throw new EmptyListException();
+			//	throw new EmptyListException();
+				return null;
 			return plotList;
 		}
-		throw new OwnerException("Customer with id "+id+" is not found");
+		//throw new OwnerException("Customer with id "+id+" is not found");
+		return null;
 	}
 
 

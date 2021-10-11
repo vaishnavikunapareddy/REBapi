@@ -10,6 +10,7 @@ import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.exception.PlotException;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
+import com.cg.rebapi.repository.AddressRepository;
 import com.cg.rebapi.repository.PlotRepository;
 import com.cg.rebapi.service.PlotService;
 
@@ -19,6 +20,8 @@ public class PlotServiceImpl implements PlotService{
 	
 	@Autowired
 	PlotRepository plotRepository;
+	@Autowired
+	AddressRepository addressRepository;
 	@Override
 	public List<Plot> listOfPlots(){
 		List<Plot> plots=plotRepository.findAll();
@@ -40,6 +43,7 @@ public class PlotServiceImpl implements PlotService{
 	public Plot deletePlot(long id) throws PlotException  {
 		if(plotRepository.existsById(id)) {
 		Plot p=plotRepository.findById(id).get();
+		addressRepository.deleteById(p.getPlotAddress().getId());
 		plotRepository.deleteById(id);
 		return p;
 		}
@@ -60,14 +64,16 @@ public class PlotServiceImpl implements PlotService{
 			Plot p=plotRepository.findById(id).get();
 			return p;
 		}
-		throw new PlotException("Plot with id "+id+" is not there to get");
+		//throw new PlotException("Plot with id "+id+" is not there to get");
+		return null;
 	}
 	
 	@Override
 	public List<Plot> getPlotStatus(String status){
 		List<Plot> plotList=plotRepository.getPlotStatus(status);
 		if(plotList.isEmpty())
-			throw new EmptyListException();
+			//throw new EmptyListException();
+			return null;
 		return plotList;
 		
 	}
