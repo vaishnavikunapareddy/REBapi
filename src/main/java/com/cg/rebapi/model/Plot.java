@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -38,6 +39,18 @@ public class Plot {
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address plotAddress;
+	
+	
+	@ManyToOne	
+	private Broker broker;
+	
+	@ManyToOne
+	private Customer customer;
+	
+	@ManyToOne
+	private Owner owner;
+	
+	
 	public Plot() {
 		super();
 	}
@@ -114,6 +127,55 @@ public class Plot {
 
 	public void setPlotAddress(Address plotAddress) {
 		this.plotAddress = plotAddress;
+	}
+	
+
+
+
+
+
+	public Broker getBroker() {
+		return broker;
+	}
+
+
+
+
+
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+
+
+
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+
+
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+
+
+
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 

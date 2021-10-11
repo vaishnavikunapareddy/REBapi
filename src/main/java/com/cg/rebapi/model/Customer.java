@@ -18,6 +18,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -44,17 +46,23 @@ public class Customer {
     @JoinColumn(name = "address_id", nullable = false)
     private Address customerAddress;
 	
-	@OneToMany
-	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Flat> flatList=new ArrayList<Flat>();
 	
-	@OneToMany
-	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Plot> plotList=new ArrayList<Plot>();
 	
-	@OneToMany
-	@JoinColumn(name="customer_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Shop> shopList=new ArrayList<Shop>();
+	
+	@ManyToOne
+	private Broker broker;
+	
+	@ManyToOne
+	private Owner owner;
 	
 	
 	
@@ -174,10 +182,28 @@ public class Customer {
 	public void setShopList(List<Shop> shopList) {
 		this.shopList = shopList;
 	}
+	
 
 
 
 
+
+	public Broker getBroker() {
+		return broker;
+	}
+
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+	
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
 
 	@Override
 	public String toString() {

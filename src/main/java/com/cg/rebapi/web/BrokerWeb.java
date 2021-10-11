@@ -25,6 +25,7 @@ import com.cg.rebapi.exception.CustomerException;
 import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.model.Address;
 import com.cg.rebapi.model.Broker;
+import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Plot;
 import com.cg.rebapi.model.Shop;
@@ -107,12 +108,16 @@ public class BrokerWeb {
 		return new ResponseEntity<>(plotList,HttpStatus.OK);
 	}
 	
-//	@GetMapping("/search/{city}")
-//	public ResponseEntity<?> propertySearch(@PathVariable String city)throws BrokerException{
-//		List<Flat> flatList= brokerServiceImpl.propertySearch(city);
-//		return  new ResponseEntity<>(flatList,HttpStatus.OK);
-//	}
+	@GetMapping("/customerlist/{id}")
+	public ResponseEntity<?> listOfCustomers(@PathVariable("id") long id) throws BrokerException{
+		List<Customer> customerList= brokerServiceImpl.listOfCustomers(id);
+		if(customerList==null)
+			return new ResponseEntity<>(customerList,HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(customerList,HttpStatus.OK);
+	}
 	
+	
+
 	
 
 }

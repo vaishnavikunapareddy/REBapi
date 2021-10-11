@@ -46,22 +46,21 @@ public class Broker {
 	
 	
 	//mapping with customer
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="broker_id", referencedColumnName = "id")
+	@OneToMany(mappedBy="broker")
+	@JsonIgnore
 	List<Customer> customerList= new ArrayList<Customer>();
 	
 	//mapping with flat
 	@OneToMany(mappedBy="broker")
 	@JsonIgnore
-	//@JoinColumn(name="broker_id",referencedColumnName = "id")
 	List<Flat> flatList=new ArrayList<Flat>();
 	/*mapping with plot*/
-	@OneToMany
-	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="broker")
+	@JsonIgnore
 	List<Plot> plotList=new ArrayList<Plot>();
 	/*mapping with shop*/
-	@OneToMany
-	@JoinColumn(name="broker_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="broker")
+	@JsonIgnore
 	List<Shop> shopList=new ArrayList<Shop>();
 	
 	public Broker() {

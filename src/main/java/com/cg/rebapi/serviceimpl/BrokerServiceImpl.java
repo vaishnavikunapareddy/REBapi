@@ -116,6 +116,19 @@ public class BrokerServiceImpl implements BrokerService{
 		//throw new BrokerException("Customer with id "+id+" is not found");
 		return null;
 	}
+	
+	public List<Customer> listOfCustomers(long id){
+		if(brokerRepository.existsById(id)) {
+			Broker broker=brokerRepository.findById(id).get();
+			List<Customer> customerList= broker.getCustomerList();
+			if(customerList.isEmpty())
+				//throw new EmptyListException();
+				return null;
+			return customerList;
+			
+		}
+		return null;
+	}
 
 
 	

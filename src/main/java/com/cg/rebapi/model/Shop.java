@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,16 +29,27 @@ public class Shop {
 	private Integer price;
 	@NotNull
 	private String status;
+	
+	
+
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address shopAddress;
+	
+	@ManyToOne	
+	private Broker broker;
+	
+	@ManyToOne
+	private Customer customer;
+	
+	@ManyToOne
+	private Owner owner;
+	
 	public Shop() {
 		super();
 	}
 	
-//	@OneToOne(cascade = CascadeType.MERGE)
-//	@JoinColumn(name="aid")
-//	Address address;
-	@OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "address_id", nullable = false)
-    private Address shopAddress;
+	
 	public Shop(Long shopId, @NotNull String shopName, @NotNull Integer noOfRooms, @NotNull String squareFeet,
 			@NotNull Integer price, @NotNull String status, Address shopAddress) {
 		super();
@@ -91,6 +103,37 @@ public class Shop {
 	public void setShopAddress(Address shopAddress) {
 		this.shopAddress = shopAddress;
 	}
+	
+	public Broker getBroker() {
+		return broker;
+	}
+
+
+	public void setBroker(Broker broker) {
+		this.broker = broker;
+	}
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Shop [shopId=" + shopId + ", shopName=" + shopName + ", noOfRooms=" + noOfRooms + ", squareFeet="

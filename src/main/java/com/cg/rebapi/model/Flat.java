@@ -38,9 +38,14 @@ public class Flat {
     @JoinColumn(name = "address_id", nullable = false)
     private Address flatAddress;
 	
-	@ManyToOne
-	
+	@ManyToOne	
 	private Broker broker;
+	
+	@ManyToOne
+	private Customer customer;
+	
+	@ManyToOne
+	private Owner owner;
 	
 	public Flat() {
 		super();
@@ -139,6 +144,32 @@ public class Flat {
 
 	public void setBroker(Broker broker) {
 		this.broker = broker;
+	}
+	
+	
+
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 

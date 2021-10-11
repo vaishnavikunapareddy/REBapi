@@ -10,6 +10,7 @@ import com.cg.rebapi.exception.EmptyFieldException;
 import com.cg.rebapi.exception.EmptyListException;
 import com.cg.rebapi.exception.OwnerException;
 import com.cg.rebapi.model.Broker;
+import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Owner;
 import com.cg.rebapi.model.Plot;
@@ -114,6 +115,19 @@ public class OwnerServiceImpl implements OwnerService{
 			return plotList;
 		}
 		//throw new OwnerException("Customer with id "+id+" is not found");
+		return null;
+	}
+	
+	public List<Customer> listOfCustomers(long id){
+		if(ownerRepository.existsById(id)) {
+			Owner owner=ownerRepository.findById(id).get();
+			List<Customer> customerList= owner.getCustomerLisr();
+			if(customerList.isEmpty())
+				//throw new EmptyListException();
+				return null;
+			return customerList;
+			
+		}
 		return null;
 	}
 

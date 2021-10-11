@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -46,17 +47,18 @@ public class Owner {
 	@OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     private Address ownerAddress;
-	
-	@OneToMany
-	@JoinColumn(name="owner_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="owner")
+	List<Customer> customerLisr=new ArrayList<Customer>();
+	@OneToMany(mappedBy="owner")
+	@JsonIgnore
 	List<Flat> flatList=new ArrayList<Flat>();
 	
-	@OneToMany
-	@JoinColumn(name="owner_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="owner")
+	@JsonIgnore
 	List<Plot> plotList=new ArrayList<Plot>();
 	
-	@OneToMany
-	@JoinColumn(name="owner_id",referencedColumnName = "id")
+	@OneToMany(mappedBy="owner")
+	@JsonIgnore
 	List<Shop> shopList=new ArrayList<Shop>();
 	
 
@@ -128,6 +130,13 @@ public class Owner {
 	}
 	public void setShopList(List<Shop> shopList) {
 		this.shopList = shopList;
+	}
+	
+	public List<Customer> getCustomerLisr() {
+		return customerLisr;
+	}
+	public void setCustomerLisr(List<Customer> customerLisr) {
+		this.customerLisr = customerLisr;
 	}
 	@Override
 	public String toString() {

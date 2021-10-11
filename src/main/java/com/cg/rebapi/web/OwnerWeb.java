@@ -21,6 +21,7 @@ import com.cg.rebapi.exception.BrokerException;
 import com.cg.rebapi.exception.MethodArgumentsNotValidException;
 import com.cg.rebapi.exception.OwnerException;
 import com.cg.rebapi.model.Address;
+import com.cg.rebapi.model.Customer;
 import com.cg.rebapi.model.Flat;
 import com.cg.rebapi.model.Owner;
 import com.cg.rebapi.model.Plot;
@@ -96,6 +97,13 @@ public class OwnerWeb {
 		if(plotList==null)
 			return new ResponseEntity<>(plotList,HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(plotList,HttpStatus.OK);
+	}
+	@GetMapping("/customerlist/{id}")
+	public ResponseEntity<?> listOfCustomers(@PathVariable("id") long id) throws BrokerException{
+		List<Customer> customerList= ownerServiceImpl.listOfCustomers(id);
+		if(customerList==null)
+			return new ResponseEntity<>(customerList,HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(customerList,HttpStatus.OK);
 	}
 	
 	
