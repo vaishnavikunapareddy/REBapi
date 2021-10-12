@@ -40,34 +40,50 @@ public class UserWeb {
 	
 	@PostMapping("")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user,BindingResult bindingResult) throws MethodArgumentsNotValidException {
-		if(bindingResult.hasErrors()) {
-			throw new MethodArgumentsNotValidException();
-		}
-		else if(brokerServiceImpl.checkBroker(user.getBroker().getId())) {
-			user = userServiceimpl.registerUser(user);
-			return new ResponseEntity<String>("Registeration successfull", HttpStatus.CREATED);
-		}
-		return new ResponseEntity<String>("Registration failed, Please check your user id",
-				HttpStatus.NOT_ACCEPTABLE);
+		userServiceimpl.registerUser(user);
+		return new ResponseEntity<String>("Registration Successful", HttpStatus.ACCEPTED);
 	}
 
 
-	@DeleteMapping("/{username}")
-	public ResponseEntity<?> deleteUser(@PathVariable("username") String userName) throws UserNotFoundException {
-		boolean userExist = userServiceimpl.isUserExist(userName);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) throws UserNotFoundException {
+		boolean userExist = userServiceimpl.isUserExist(id);
 		if(userExist) {
-			userServiceimpl.deleteUser(userName);
-			return new ResponseEntity<String>("User "+userName+" deleted successfully", HttpStatus.OK);
+			userServiceimpl.deleteUser(id);
+			return new ResponseEntity<String>("User with "+id+" deleted successfully", HttpStatus.OK);
 		}
-		throw new UserNotFoundException(userName);
+		//throw new UserNotFoundException(userName);
+		return new ResponseEntity<String>("User with "+id+" not found ", HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping("/login")
-	public ResponseEntity<?> userValidate(@RequestBody User user){		
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getUser(@PathVariable("id") Long id){
+		boolean userExist = userServiceimpl.isUserExist(id);
+		if(userExist) {
+			User user=userServiceimpl.getUser(id);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+		//throw new UserNotFoundException(userName);
+		return new ResponseEntity<String>("User with "+id+" not found ", HttpStatus.NOT_FOUND);
+		
+	}
+	
+//	@GetMapping("/login")
+//	public ResponseEntity<?> userValidate(@RequestBody User user){		
+//		if(userServiceimpl.validateUser(user)){
+//				return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
+//			}
+//		return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
+//	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> userValidate(@RequestBody User user){	
 		if(userServiceimpl.validateUser(user)){
-				return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
-			}
-		return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
+		}
+	return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
+		
 	}
 	
 	@GetMapping("")
