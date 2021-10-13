@@ -69,23 +69,23 @@ public class UserWeb {
 		
 	}
 	
-//	@GetMapping("/login")
-//	public ResponseEntity<?> userValidate(@RequestBody User user){		
-//		if(userServiceimpl.validateUser(user)){
-//				return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
-//			}
-//		return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
-//	}
-	
 	@PostMapping("/login")
-	public ResponseEntity<?> userValidate(@RequestBody User user){	
+	public ResponseEntity<?> userValidate(@RequestBody User user){		
 		if(userServiceimpl.validateUser(user)){
-			return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
-		}
-	return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
-		
+				return new ResponseEntity<String>("Login Successfull", HttpStatus.ACCEPTED);
+			}
+		return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_ACCEPTABLE);
 	}
 	
+//	@PostMapping("/login")
+//	public Boolean userValidate(@RequestBody User user){	
+//		if(userServiceimpl.validateUser(user)){
+//			return true;
+//		}
+//	return false;
+//		
+//	}
+//	
 	@GetMapping("")
 	public ResponseEntity<?> getUsersList(){
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
